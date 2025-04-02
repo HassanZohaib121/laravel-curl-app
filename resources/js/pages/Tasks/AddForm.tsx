@@ -1,9 +1,8 @@
 import AppLayout from '@/layouts/app-layout'
 import { Head, useForm } from '@inertiajs/react'
 
-
 export default function AddForm() {
-  const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
+  const { data, setData, post, errors, processing } = useForm({
     name: '',
     description: '',
     due_date: ''
@@ -12,7 +11,7 @@ export default function AddForm() {
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     post(route('tasks.addData'));
-  };
+  };  
 
   return (
     <AppLayout>
@@ -26,6 +25,7 @@ export default function AddForm() {
           value={data.name} 
           onChange={(e) => setData('name', e.target.value)} 
           className='border-2 border-gray-300 rounded-md p-2' />
+          {errors.name && <p className='text-red-500'>{errors.name}</p>}
         <input 
           type="text" 
           name='description' 
@@ -33,12 +33,14 @@ export default function AddForm() {
           value={data.description} 
           onChange={(e) => setData('description', e.target.value)} 
           className='border-2 border-gray-300 rounded-md p-2' />
+          {errors.description && <p className='text-red-500'>{errors.description}</p>}
         <input 
         type="date" 
           name='due_date' 
           value={data.due_date} 
           onChange={(e) => setData('due_date', e.target.value)} 
           className='border-2 border-gray-300 rounded-md p-2' />
+          {errors.due_date && <p className='text-red-500'>{errors.due_date}</p>}
         <button 
           type='submit' 
           disabled={processing} 

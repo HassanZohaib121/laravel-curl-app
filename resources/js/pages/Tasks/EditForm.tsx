@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 export default function EditForm({task}: {task: Task}){
-  const { data, setData, patch, post, errors, processing, recentlySuccessful } = useForm({
+  const { data, setData, post, errors, processing } = useForm({
         id: task.id,
         name: task.name,
         description: task.description,
@@ -32,8 +32,11 @@ export default function EditForm({task}: {task: Task}){
           <form onSubmit={submit} method='POST' className='flex flex-col gap-4 w-[50%] mx-auto mt-10'>
             <input type="hidden" name='id' value={task.id} />
             <Input type="text" name='name' value={data.name} onChange={(e) => setData('name', e.target.value)} />
+            {errors.name && <p className='text-red-500'>{errors.name}</p>}
             <Input type="text" name='description' value={data.description} onChange={(e) => setData('description', e.target.value)} />
+            {errors.description && <p className='text-red-500'>{errors.description}</p>}
             <Input type="date" name='due_date' value={data.due_date} onChange={(e) => setData('due_date', e.target.value)} />
+            {errors.due_date && <p className='text-red-500'>{errors.due_date}</p>}
             <Button type='submit' disabled={processing}>Update</Button>
           </form>
         </div>

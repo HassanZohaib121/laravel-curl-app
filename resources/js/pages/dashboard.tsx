@@ -1,9 +1,9 @@
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+// import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+// import { BarChart, Bar } from 'recharts';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Task } from '@/types';
 import { Head } from '@inertiajs/react';
-import { BarChart, Bar } from 'recharts';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -22,6 +22,7 @@ export default function Dashboard({tasks}: {tasks: Task[]}) {
     //       color: "#fff",
     //     },
     //   } satisfies ChartConfig
+    console.log(tasks);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
