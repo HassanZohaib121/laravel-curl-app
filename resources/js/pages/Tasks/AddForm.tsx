@@ -1,23 +1,28 @@
 import AppLayout from '@/layouts/app-layout'
 import { Head, useForm } from '@inertiajs/react'
+import { FormData } from '@/types'
 
 export default function AddForm() {
-  const { data, setData, post, errors, processing } = useForm({
+  const { data, setData, post, errors, processing, reset } = useForm<FormData>({
+    id: undefined,
     name: '',
     description: '',
-    due_date: ''
+    due_date: '',
+    image: null
   });
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    post(route('tasks.addData'));
+    post(route('tasks.addData', { onSuccess:()=>{
+      reset();
+    }}));
   };  
 
   return (
     <AppLayout>
       <Head title="Add Task" />
       <h1 className='text-2xl font-bold text-center mt-10'>Add Task</h1>
-      <form method='POST' className='flex flex-col gap-4 w-[50%] mx-auto mt-10' onSubmit={submit}>
+      <form method='POST' className='flex flex-col gap-4 w-[50%] mx-auto mt-10' onSubmit={submit} encType='multipart/form-data'>
         <input 
           type="text" 
           name='name' 
@@ -41,6 +46,12 @@ export default function AddForm() {
           onChange={(e) => setData('due_date', e.target.value)} 
           className='border-2 border-gray-300 rounded-md p-2' />
           {errors.due_date && <p className='text-red-500'>{errors.due_date}</p>}
+        <input 
+          type="file" 
+          name='image' 
+          onChange={(e) => setData('image', e.target.files?.[0] || null)} 
+          className='border-2 border-gray-300 rounded-md p-2' />
+          {errors.image && <p className='text-red-500'>{errors.image}</p>}
         <button 
           type='submit' 
           disabled={processing} 

@@ -10,7 +10,12 @@ class Task extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'image',
         'description',
         'due_date',
     ];
+
+    // public function getImageAttribute($value){
+    //     return asset('storage/' . $value);
+    // }
 }

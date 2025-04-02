@@ -17,6 +17,7 @@ export default function TaskTable({tasks}:{tasks:Task[]}){
       <TableRow className='bg-gray-100 dark:bg-gray-800'>
           <TableHead className="w-[100px]">ID</TableHead>
           <TableHead className="w-[100px]">Task</TableHead>
+          <TableHead className="w-[100px]">Image</TableHead>
           <TableHead className="w-[100px]">Description</TableHead>
           <TableHead className="w-[100px] text-center">Due Date</TableHead>
           <TableHead className="w-[100px]">Actions</TableHead>
@@ -28,6 +29,9 @@ export default function TaskTable({tasks}:{tasks:Task[]}){
           <TableRow key={task.id} className='hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200 items-center'>
               <TableCell>{index++}</TableCell>
               <TableCell>{task.name}</TableCell>
+              <TableCell>
+                <img src={`/storage/${task.image}`} alt={task.name} className='w-10 h-10 rounded-md' />
+              </TableCell>
               <TableCell>{task.description}</TableCell>
               <TableCell className='text-center'>{task.due_date}</TableCell>
               <TableCell className='flex gap-2 justify-start'>

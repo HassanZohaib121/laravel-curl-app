@@ -4,6 +4,7 @@ import { Head } from '@inertiajs/react';
 import TaskTable from '@/components/TaskTable';
 import { Link } from '@inertiajs/react';
 export default function Index({tasks}: {tasks: Task[]}) {    
+    console.log(tasks);
     return (
         <AppLayout>
             <Head title="Tasks" />

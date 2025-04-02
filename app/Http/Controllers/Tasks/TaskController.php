@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 class TaskController extends Controller
 {
    protected $fillable = ['name', 'description', 'due_date'];
@@ -32,10 +32,18 @@ class TaskController extends Controller
       return redirect()->back()->with('error', 'Task not found');
      }
 
+     if($request->hasFile('image')){
+       if($task->image){
+        Storage::disk('public')->delete($task->image);
+       }
+      $image = $request->file('image')->store('tasks', 'public');
+     }
+
      $task->update([
       'name' => $request->name,
       'description' => $request->description,
-      'due_date' => $request->due_date
+      'due_date' => $request->due_date,
+      'image' => $image,
      ]);
      
      return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
@@ -57,12 +65,21 @@ class TaskController extends Controller
           'name' => 'required|string|max:255',
           'description' => 'nullable|string',
           'due_date' => 'nullable|date',
+          'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
+
+      if($request->hasFile('image')){
+         if($request->image){
+            Storage::disk('public')->delete($request->image);
+         }
+         $image = $request->file('image')->store('tasks', 'public');
+      }
   
       Task::create([
           'name' => $request->name,
           'description' => $request->description,
           'due_date' => $request->due_date,
+          'image' => $image,
       ]);  
 
       return redirect()->route('tasks.index')->with('success', 'Task added successfully');

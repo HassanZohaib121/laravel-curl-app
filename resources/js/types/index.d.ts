@@ -45,6 +45,15 @@ export interface Task {
     description: ReactNode;
     id: number;
     name: string;
+    image: string;
     created_at: string;
     updated_at: string;
+}
+
+export interface FormData extends Record<string, any> {
+    id: number | undefined;
+    name: string;
+    description?: string;
+    due_date?: string;
+    image?: File | null;
 }
